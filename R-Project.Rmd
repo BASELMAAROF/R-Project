@@ -1,6 +1,8 @@
 ---
 title: "R for Data Science Project"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 Adding Packages - tidyverse
@@ -180,6 +182,71 @@ count(ames_train,Alley)
 ```
 
 ```{r}
+filter(ames_train,Sale.Condition=="Normal")
+```
+```{r}
+nrow(ames_train)
+```
+```{r}
+ames_train%>%ggplot()+geom_point(aes(x = Year.Built,y = price))
+```
+```{r}
+ames_train%>%ggplot()+geom_point(aes(x = Overall.Qual,y = price))
+```
+```{r}
+ames_train%>%ggplot()+geom_bar(aes(x = Overall.Qual, stat="identity"))
+```
+```{r}
+(model <- lm(price ~ Year.Built + Lot.Area + area + Overall.Qual + Overall.Cond+Bedroom.AbvGr,data=ames_train))
+```
 
+
+```{r}
+summary(model)
+```
+```{r}
+?stepAIC
+```
+
+
+
+
+```{r}
+stepAIC(model,a=2,direction="backward",trace=FALSE)
+```
+
+
+
+```{r}
+sqrt(mean(model$residuals^2))
+```
+
+
+
+
+```{r}
+ames_train%>%dplyr::select(Year.Built , Lot.Area , area , Overall.Qual , Overall.Cond, Bedroom.AbvGr, price)
+```
+
+```{r}
+```
+
+
+```{r}
+(df<-tibble(Year.Built=1939,Overall.Qual=as.character(6),area=856,Bedroom.AbvGr=2,Lot.Area=7890,Overall.Cond=as.character(6)))
+```
+
+
+```{r}
+predict(model,df)
+```
+
+```{r}
+103203.8-126000
+```
+
+
+```{r}
+model$residuals[1]
 ```
 
